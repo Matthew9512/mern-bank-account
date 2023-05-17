@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+   body {
+      @apply text-slate-900;
+   }
+   input {
+      @apply p-3 rounded-xl w-full;
+   }
+   button {
+      @apply p-3 rounded-lg bg-neutral-500 text-white;
+   }
+}
+
+@layer utilities {
+   .link {
+      @apply underline text-sky-700;
+   }
+}
