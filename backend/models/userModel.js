@@ -6,6 +6,14 @@ const userSchema = new Schema({
    email: String,
    password: String,
    totalMoney: Number,
+   accountMovements: [
+      {
+         movementType: String,
+         moneyAmount: Number,
+         transactionUser: String,
+         transactionDate: Date,
+      },
+   ],
 });
 
 module.exports = mongoose.model('User', userSchema);

@@ -3,18 +3,22 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const corsOptions = require('./config/corsOptions');
+const cacheControl = require('./middleware/cacheControl');
 
 const app = express();
-const PORT = 6000;
+const PORT = 8000;
 const connDB = require('./config/connDB');
 
 app.use(cors(corsOptions));
+// app.use(cors());
+// app.use(compression())
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cacheControl);
 
-app.use('/auth', require('./routes/userRouter'));
-app.use('/dashboard', require('./routes/dashboardRouter'));
+app.use('/auth', require('./routes/authRouter'));
+app.use('/account', require('./routes/accountMovementsRouter'));
 
 connDB();
 
