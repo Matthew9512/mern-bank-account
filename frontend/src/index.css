@@ -1,21 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;600&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
    body {
-      @apply text-slate-900;
+      font-family: 'Montserrat', sans-serif;
+      @apply text-light-grey;
    }
    input {
-      @apply p-3 rounded-xl w-full;
+      @apply p-3 rounded-md w-full bg-dark-white border border-light-green outline-white placeholder:text-light-grey placeholder:opacity-70;
    }
    button {
-      @apply p-3 rounded-lg bg-neutral-500 text-white;
+      @apply p-3 rounded-md bg-light-green text-white hover:bg-dark-green;
    }
 }
 
 @layer utilities {
    .link {
-      @apply underline text-sky-700;
+      @apply underline text-blue;
    }
+   .btn {
+      @apply p-3 rounded-md bg-light-green text-white text-center mt-12 hover:bg-dark-green;
+   }
+   /* .bluredWrapper {
+      position: relative;
+   }
+   .bluredWrapper:before,
+   .bluredWrapper:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 50px;  Height of the effect
+   }
+   .bluredWrapper:before {
+      top: 0;
+      Use your background color, assuming white:
+      background-image: linear-gradient(to bottom, #f8f8f8, rgba(255, 255, 255, 0));
+   }
+   .bluredWrapper:after {
+      bottom: 0;
+       Use your background color, assuming white:
+      background-image: linear-gradient(to top, #f8f8f8, rgba(255, 255, 255, 0));
+   }
+   .bluredContent {
+      border: 0 solid transparent;
+      border-width: 10px 0;  10px to be able to read first and last lines 
+   } */
 }

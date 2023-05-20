@@ -48,6 +48,8 @@ const signIn = async (req, res, next) => {
 
       const bcryptPass = await bcrypt.hash(password, 10);
 
+      // const accountNumber =
+
       const newUser = await userModel.create({ password: bcryptPass, email, username });
 
       return res.status(201).json({ message: `Account successfully created, welcome ${username}` });

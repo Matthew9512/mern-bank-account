@@ -6,12 +6,14 @@ const userSchema = new Schema({
    email: String,
    password: String,
    totalMoney: Number,
+   accountNumber: Number,
    accountMovements: [
       {
          movementType: String,
          moneyAmount: Number,
          transactionUser: String,
-         transactionDate: Date,
+         user: String,
+         transactionDate: { type: Date, default: Date.now },
       },
    ],
 });

@@ -1,6 +1,6 @@
 const userModel = require('../models/userModel');
 
-const updateTransactionToUser = async (body, id) => {
+const updateTransactionToUser = async (body, id, username) => {
    /**
     * @todo add date
     */
@@ -13,6 +13,7 @@ const updateTransactionToUser = async (body, id) => {
             movementType: 'income',
             moneyAmount: body.moneyAmount,
             transactionUser: id,
+            user: username,
          },
       },
    });

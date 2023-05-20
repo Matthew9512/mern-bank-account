@@ -21,7 +21,7 @@ const getUser = async (req, res, next) => {
 
       const { password, updatedAt, __v, ...data } = findUser._doc;
 
-      res.status(200).json({ data });
+      res.status(200).json(data);
    } catch (error) {
       console.log(error);
       next(error);
@@ -34,10 +34,9 @@ const transferMoney = async (req, res, next) => {
     * @todo verifyJwt
     */
    try {
-      const { movementType, moneyAmount, transactionUser, id } = req.body;
+      const { moneyAmount, transactionUser, id } = req.body;
 
-      if (!movementType || !moneyAmount || !transactionUser || !id)
-         return res.status(400).json({ message: `No enought information to complete transfer` });
+      if (!moneyAmount || !transactionUser || !id) return res.status(400).json({ message: `No enought information to complete transfer` });
 
       // decoded users info
       // const { userID } = req.user;
@@ -50,10 +49,10 @@ const transferMoney = async (req, res, next) => {
 
       if (!transactionTO) return res.status(409).json({ message: `Cant make transaction, provided user dont egsist` });
 
-      //    update user that gets money from transaction
-      updateTransactionToUser(req.body, id);
-
       const findUser = await userModel.findById(id);
+
+      //    update user that gets money from transaction
+      updateTransactionToUser(req.body, id, findUser.username);
 
       // check if there is enought money to make transaction and calc how much money will user have after transaction
       const checkTransaction = findUser.totalMoney - moneyAmount;
@@ -69,6 +68,7 @@ const transferMoney = async (req, res, next) => {
                   movementType: 'outcome',
                   moneyAmount,
                   transactionUser,
+                  user: transactionTO.username,
                },
             },
          })
