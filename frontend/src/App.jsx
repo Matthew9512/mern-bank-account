@@ -14,8 +14,8 @@ export const App = () => {
                <Route path='/' element={<Welcome />}></Route>
                <Route path='/login' element={<Login />}></Route>
                <Route path='/register' element={<Register />}></Route>
-               <Route path='/account/:id' element={<Account />}></Route>
-               <Route path='/account/transaction/:id' element={<NewTransaction />}></Route>
+               <Route path='/account/user/:id' element={<Account />}></Route>
+               <Route path='/account/new-transaction/:id' element={<NewTransaction />}></Route>
                <Route path='/*' element={<Error />}></Route>
             </Routes>
          </BrowserRouter>

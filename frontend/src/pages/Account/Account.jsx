@@ -12,14 +12,14 @@ import { LoadingSpinner } from '../../components/LoadingSpinner';
 export const Account = () => {
    const { fetchData, data, loading, error, ready } = useAxios();
    const { id } = useParams();
-   console.log(data);
+   // console.log(data);
 
    useEffect(() => {
       fetchData({
-         url: `/account/${id}`,
+         url: `/account/user/${id}`,
       });
    }, [id]);
-
+   // user/:id/monthly-transactions
    if (!data) return <LoadingSpinner loading={loading} />;
 
    return (
@@ -34,7 +34,8 @@ export const Account = () => {
                <UsersDetails data={data} />
             </div>
             {/* flex-col-reverse */}
-            <div className='relative flex flex-col w-full h-[250px] overflow-y-auto lg:w-1/2 md:w-4/5 '>
+            <div className='relative flex flex-col w-full h-screen overflow-y-auto lg:w-1/2 md:w-4/5 '>
+               {/* <div className='relative flex flex-col w-full h-[250px] overflow-y-auto lg:w-1/2 md:w-4/5 '> */}
                <TransactionsList data={data} loading={loading} />
             </div>
          </div>

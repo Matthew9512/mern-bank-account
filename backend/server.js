@@ -9,8 +9,8 @@ const app = express();
 const PORT = 8000;
 const connDB = require('./config/connDB');
 
-app.use(cors(corsOptions));
-// app.use(cors());
+// app.use(cors(corsOptions));
+app.use(cors());
 // app.use(compression())
 app.use(cookieParser());
 app.use(express.json());

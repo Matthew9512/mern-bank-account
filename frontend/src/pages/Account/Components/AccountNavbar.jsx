@@ -11,7 +11,7 @@ export const AccountNavbar = ({ data }) => {
             <span onClick={logOut}>{logOutIcon}</span>
             <div className='dropdown dropdown-end'>
                <label tabIndex={0} className='flex gap-1'>
-                  {userIcon} {data?.username}
+                  {userIcon} {data.user?.username}
                </label>
                <ul tabIndex={0} className='dropdown-content menu p-1 shadow bg-base-100 rounded-box w-52'>
                   <li>

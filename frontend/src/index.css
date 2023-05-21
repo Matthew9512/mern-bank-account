@@ -15,7 +15,6 @@
       @apply p-3 rounded-md bg-light-green text-white hover:bg-dark-green;
    }
 }
-
 @layer utilities {
    .link {
       @apply underline text-blue;

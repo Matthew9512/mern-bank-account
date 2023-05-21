@@ -25,7 +25,7 @@ export const Login = () => {
       if (!ready) return;
       const { userID } = jwtDecode(data?.accessToken);
       console.log(userID);
-      navigate(`/account/${userID}`);
+      navigate(`/account/user/${userID}`);
    }, [ready]);
 
    return (

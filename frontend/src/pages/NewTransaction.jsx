@@ -15,7 +15,7 @@ export const NewTransaction = () => {
       if (!amountRef.current.value || !recipientRef.current.value) return; // message
 
       fetchData({
-         url: `account/transaction`,
+         url: `account/new-transaction`,
          method: `POST`,
          data: {
             moneyAmount: amountRef.current.value,

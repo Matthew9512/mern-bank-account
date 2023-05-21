@@ -1,6 +1,12 @@
 const userModel = require('../models/userModel');
-const updateTransactionToUser = require('../utils/transactions');
+const { incomesSum, outcomesSum } = require('../utils/monthlyMovements');
+const { updateTransactionToUser, _resLimit } = require('../utils/transactions');
 
+/**
+ * @todo stop filtering arr
+ */
+
+// get users date with first page of transactions
 const getUser = async (req, res, next) => {
    /**
     * @todo verifyJwt
@@ -10,24 +16,46 @@ const getUser = async (req, res, next) => {
 
       if (!id) return res.status(404).json({ message: `No data provided` });
 
-      const findUser = await userModel.findById(id);
+      const findUser = await userModel.findById(id, { accountMovements: { $slice: [0, _resLimit] } });
 
       if (!findUser) return res.status(404).json({ message: `User not found` });
+
+      // monthly account movements based on current month
+      const monthlyIncomesMovements = incomesSum(findUser);
+      const monthlyOutcomesMovements = outcomesSum(findUser);
 
       // decoded users info
       // const { userID } = req.user;
 
       // if (id !== userID) return res.status(403).json({ message: `You are not authorized to access this information` });
 
-      const { password, updatedAt, __v, ...data } = findUser._doc;
+      const { password, updatedAt, __v, ...user } = findUser._doc;
 
-      res.status(200).json(data);
+      res.status(200).json({ user, monthlyIncomesMovements, monthlyOutcomesMovements });
    } catch (error) {
       console.log(error);
       next(error);
    }
 };
 
+// paginated users transactions
+const getUsersTransactions = async (req, res, next) => {
+   try {
+      // const resLimit = 6;
+      const { id } = req.params;
+      const { page } = req.query;
+
+      const transactions = await userModel.findById(id, { accountMovements: { $slice: [(page - 1) * _resLimit, _resLimit * page] } });
+
+      const { accountMovements } = transactions._doc;
+      res.status(200).json({ accountMovements });
+   } catch (error) {
+      console.log(error);
+      next(error);
+   }
+};
+
+// make a new transaction
 const transferMoney = async (req, res, next) => {
    /**
     * @todo add date
@@ -81,4 +109,36 @@ const transferMoney = async (req, res, next) => {
    }
 };
 
-module.exports = { getUser, transferMoney };
+//
+const getMonthlyTransactions = async (req, res, next) => {
+   /**
+    * @todo verifyJwt
+    * @todo stop filtering arr
+    */
+
+   try {
+      const { id } = req.params;
+
+      if (!id) return res.status(404).json({ message: `No data provided` });
+
+      const findUser = await userModel.findById(id);
+
+      if (!findUser) return res.status(404).json({ message: `User not found` });
+
+      // monthly account movements based on current month
+      const incomesSum = monthlyIncomesMovements(findUser);
+      const outcomesSum = monthlyOutcomesMovements(findUser);
+
+      res.status(200).json({ incomesSum, outcomesSum });
+
+      // decoded users info
+      // const { userID } = req.user;
+
+      // if (id !== userID) return res.status(403).json({ message: `You are not authorized to access this information` });
+   } catch (error) {
+      console.log(error);
+      next(error);
+   }
+};
+
+module.exports = { getUser, transferMoney, getMonthlyTransactions, getUsersTransactions };
