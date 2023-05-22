@@ -2,9 +2,10 @@
  * @todo stop filtering arr
  */
 
-const incomesSum = (findUser) => {
+// monthly incomes sum
+const incomesSum = (userData) => {
    const date = new Date().getMonth() + 1;
-   return findUser.accountMovements
+   return userData.accountMovements
       .filter((value) => {
          return value.transactionDate.getMonth() + 1 === date && value.movementType === 'income';
       })
@@ -13,9 +14,10 @@ const incomesSum = (findUser) => {
       }, 0);
 };
 
-const outcomesSum = (findUser) => {
+// monthly outcomes sum
+const outcomesSum = (userData) => {
    const date = new Date().getMonth() + 1;
-   return findUser.accountMovements
+   return userData.accountMovements
       .filter((value) => {
          return value.transactionDate.getMonth() + 1 === date && value.movementType === 'outcome';
       })

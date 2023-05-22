@@ -1,7 +1,6 @@
 export const LoadingSpinner = ({ loading }) => {
    return (
       <div className={`absolute top-0 bottom-0 left-0 right-0 bg-light-black flex justify-center items-center ${loading ? '' : 'hidden'} `}>
-         {/* ${loading ? '' : 'hidden'} */}
          <svg
             aria-hidden='true'
             role='status'

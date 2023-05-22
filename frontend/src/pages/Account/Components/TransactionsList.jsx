@@ -35,8 +35,8 @@ export const TransactionsList = ({ data, loading }) => {
                );
             })
          )}
-         <Pagination setResData={setResData} />
-         <Link to={`/account/new-transaction/${resData._id}`} className='btn'>
+         <Pagination setResData={setResData} numberOfPages={data?.numberOfPages} />
+         <Link to={`/account/new-transaction/${data.user?._id}`} className='btn'>
             + New Transaction
          </Link>
       </>

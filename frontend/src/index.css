@@ -22,29 +22,4 @@
    .btn {
       @apply p-3 rounded-md bg-light-green text-white text-center mt-12 hover:bg-dark-green;
    }
-   /* .bluredWrapper {
-      position: relative;
-   }
-   .bluredWrapper:before,
-   .bluredWrapper:after {
-      content: '';
-      position: absolute;
-      left: 0;
-      right: 0;
-      height: 50px;  Height of the effect
-   }
-   .bluredWrapper:before {
-      top: 0;
-      Use your background color, assuming white:
-      background-image: linear-gradient(to bottom, #f8f8f8, rgba(255, 255, 255, 0));
-   }
-   .bluredWrapper:after {
-      bottom: 0;
-       Use your background color, assuming white:
-      background-image: linear-gradient(to top, #f8f8f8, rgba(255, 255, 255, 0));
-   }
-   .bluredContent {
-      border: 0 solid transparent;
-      border-width: 10px 0;  10px to be able to read first and last lines 
-   } */
 }

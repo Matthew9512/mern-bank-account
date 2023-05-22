@@ -3,10 +3,10 @@ import { useAxios } from '../../../hooks/useAxios';
 import { useEffect, useState } from 'react';
 import { renderPagination } from '../../../utils/renderPagination';
 
-export const Pagination = ({ setResData }) => {
+export const Pagination = ({ setResData, numberOfPages }) => {
    const { fetchData, data, ready } = useAxios();
    const { id } = useParams();
-   const numberOfPages = 5;
+   // const numberOfPages = 5;
    const [currentPage, setCurrentPage] = useState(1);
 
    const nextPage = (e) => {

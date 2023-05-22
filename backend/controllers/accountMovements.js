@@ -1,6 +1,6 @@
 const userModel = require('../models/userModel');
 const { incomesSum, outcomesSum } = require('../utils/monthlyMovements');
-const { updateTransactionToUser, _resLimit } = require('../utils/transactions');
+const { updateTransactionToUser, searchUser, _resLimit } = require('../utils/userActions');
 
 /**
  * @todo stop filtering arr
@@ -16,13 +16,16 @@ const getUser = async (req, res, next) => {
 
       if (!id) return res.status(404).json({ message: `No data provided` });
 
-      const findUser = await userModel.findById(id, { accountMovements: { $slice: [0, _resLimit] } });
+      // ^==
+      const findUser = await userModel.findById(id, { accountMovements: { $slice: [0, _resLimit] } }); // <==
+      // ^==
 
       if (!findUser) return res.status(404).json({ message: `User not found` });
 
+      const { userData, numberOfPages } = await searchUser(id);
       // monthly account movements based on current month
-      const monthlyIncomesMovements = incomesSum(findUser);
-      const monthlyOutcomesMovements = outcomesSum(findUser);
+      const monthlyIncomesMovements = incomesSum(userData);
+      const monthlyOutcomesMovements = outcomesSum(userData);
 
       // decoded users info
       // const { userID } = req.user;
@@ -31,7 +34,7 @@ const getUser = async (req, res, next) => {
 
       const { password, updatedAt, __v, ...user } = findUser._doc;
 
-      res.status(200).json({ user, monthlyIncomesMovements, monthlyOutcomesMovements });
+      res.status(200).json({ user, monthlyIncomesMovements, monthlyOutcomesMovements, numberOfPages });
    } catch (error) {
       console.log(error);
       next(error);
@@ -45,7 +48,13 @@ const getUsersTransactions = async (req, res, next) => {
       const { id } = req.params;
       const { page } = req.query;
 
-      const transactions = await userModel.findById(id, { accountMovements: { $slice: [(page - 1) * _resLimit, _resLimit * page] } });
+      console.log(page);
+
+      // ^==
+      const transactions = await userModel.findById(id).slice('accountMovements', (page - 1) * _resLimit, _resLimit); // <==
+      // ^==
+
+      // const transactions = await userModel.findById(id, { accountMovements: { $slice: [(page - 1) * _resLimit, _resLimit * page] } });
 
       const { accountMovements } = transactions._doc;
       res.status(200).json({ accountMovements });

@@ -1,5 +1,6 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
+import { LoadingButton } from '../../../components/LoadingButton';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -19,9 +20,7 @@ export function MontlyAccountOutcomes({ data }) {
       ],
    };
 
-   // console.log(data);
-
-   if (!data) return <p>loading</p>;
+   if (!data) return <LoadingButton />;
 
    return (
       <div>
@@ -35,17 +34,3 @@ export function MontlyAccountOutcomes({ data }) {
       </div>
    );
 }
-
-// const filterOutcomes = () => {
-//    return data.accountMovements.filter((value) => {
-//       if (value?.movementType === 'outcome') return value?.moneyAmount;
-//    });
-// };
-
-// useEffect(() => {
-//    const outcomes = filterOutcomes();
-//    const sumOutcomes = outcomes.reduce((acc, value) => acc + value.moneyAmount, 0);
-//    setTotalOutcomes(sumOutcomes);
-
-//    console.log(sumOutcomes);
-// }, [data]);

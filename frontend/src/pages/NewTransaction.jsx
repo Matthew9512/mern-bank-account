@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useAxios } from '../hooks/useAxios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { LoadingButton } from '../components/LoadingButton';
+import { Message } from '../components/Message';
 
 export const NewTransaction = () => {
    const { fetchData, data, loading, error, ready } = useAxios();
@@ -35,6 +36,7 @@ export const NewTransaction = () => {
 
    return (
       <>
+         <Message />
          <form className='flex flex-col items-start justify-center py-12 px-6 p-8 m-auto w-96 rounded-xl bg-white relative'>
             <p className='font-bold tracking-wide pb-4 mx-auto'>Make a new transaction</p>
             <label className='pt-4' htmlFor='account-number'>

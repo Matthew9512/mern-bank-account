@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 axios.defaults.baseURL = `http://localhost:8000`;
 // axios.defaults.withCredentials: true,
@@ -10,6 +11,7 @@ export const useAxios = () => {
    const [error, setError] = useState(false);
    const [data, setData] = useState(false);
    const [ready, setReady] = useState(false);
+   const navigate = useNavigate();
 
    const fetchData = async (method) => {
       //   setError(false);
@@ -22,6 +24,7 @@ export const useAxios = () => {
          setData(resData);
          setReady(true);
       } catch (error) {
+         if (error.request.status === 0) return navigate('/server-down');
          console.log(error.response.data.message);
          setError(error.response.data.message);
       } finally {
