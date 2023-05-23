@@ -8,11 +8,11 @@ import { Pagination } from './Pagination';
 export const TransactionsList = ({ data, loading }) => {
    const [resData, setResData] = useState(data.user);
 
-   if (!resData) return <p>loading...</p>;
+   if (!resData) return <LoadingSpinner loading={loading} />;
 
    return (
       <>
-         <LoadingSpinner loading={loading} />
+         {/* <LoadingSpinner loading={loading} /> */}
          <p className='font-bold text-lg'>Transactions:</p>
          {!resData?.accountMovements.length ? (
             <p className='pt-4'>No transactions yet </p>

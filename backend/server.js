@@ -8,9 +8,10 @@ const cacheControl = require('./middleware/cacheControl');
 const app = express();
 const PORT = 8000;
 const connDB = require('./config/connDB');
+const verifyJwt = require('./middleware/verifyJwt');
 
-// app.use(cors(corsOptions));
-app.use(cors());
+app.use(cors(corsOptions));
+// app.use(cors());
 // app.use(compression())
 app.use(cookieParser());
 app.use(express.json());
@@ -18,7 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cacheControl);
 
 app.use('/auth', require('./routes/authRouter'));
-app.use('/account', require('./routes/accountMovementsRouter'));
+app.use('/account', verifyJwt, require('./routes/accountMovementsRouter'));
 
 connDB();
 

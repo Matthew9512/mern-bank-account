@@ -1,12 +1,11 @@
 import { useParams } from 'react-router-dom';
-import { useAxios } from '../../../hooks/useAxios';
+import { useAuthAxios } from '../../../hooks/useAuthAxios';
 import { useEffect, useState } from 'react';
 import { renderPagination } from '../../../utils/renderPagination';
 
 export const Pagination = ({ setResData, numberOfPages }) => {
-   const { fetchData, data, ready } = useAxios();
+   const { fetchData, data, ready } = useAuthAxios();
    const { id } = useParams();
-   // const numberOfPages = 5;
    const [currentPage, setCurrentPage] = useState(1);
 
    const nextPage = (e) => {
@@ -22,6 +21,7 @@ export const Pagination = ({ setResData, numberOfPages }) => {
    useEffect(() => {
       if (!ready) return;
       setResData(data);
+      // page number here
    }, [ready, data]);
 
    return (

@@ -8,17 +8,17 @@ const { updateTransactionToUser, searchUser, _resLimit } = require('../utils/use
 
 // get users date with first page of transactions
 const getUser = async (req, res, next) => {
-   /**
-    * @todo verifyJwt
-    */
    try {
       const { id } = req.params;
 
       if (!id) return res.status(404).json({ message: `No data provided` });
 
-      // ^==
-      const findUser = await userModel.findById(id, { accountMovements: { $slice: [0, _resLimit] } }); // <==
-      // ^==
+      // decoded users info
+      const { userID } = req.user;
+
+      if (id !== userID) return res.status(403).json({ message: `You are not authorized to access this information` });
+
+      const findUser = await userModel.findById(id, { accountMovements: { $slice: [0, _resLimit] } });
 
       if (!findUser) return res.status(404).json({ message: `User not found` });
 
@@ -26,11 +26,6 @@ const getUser = async (req, res, next) => {
       // monthly account movements based on current month
       const monthlyIncomesMovements = incomesSum(userData);
       const monthlyOutcomesMovements = outcomesSum(userData);
-
-      // decoded users info
-      // const { userID } = req.user;
-
-      // if (id !== userID) return res.status(403).json({ message: `You are not authorized to access this information` });
 
       const { password, updatedAt, __v, ...user } = findUser._doc;
 
@@ -44,17 +39,15 @@ const getUser = async (req, res, next) => {
 // paginated users transactions
 const getUsersTransactions = async (req, res, next) => {
    try {
-      // const resLimit = 6;
       const { id } = req.params;
       const { page } = req.query;
 
-      console.log(page);
+      // decoded users info
+      const { userID } = req.user;
 
-      // ^==
-      const transactions = await userModel.findById(id).slice('accountMovements', (page - 1) * _resLimit, _resLimit); // <==
-      // ^==
+      if (id !== userID) return res.status(403).json({ message: `You are not authorized to access this information` });
 
-      // const transactions = await userModel.findById(id, { accountMovements: { $slice: [(page - 1) * _resLimit, _resLimit * page] } });
+      const transactions = await userModel.findById(id).slice('accountMovements', (page - 1) * _resLimit, _resLimit);
 
       const { accountMovements } = transactions._doc;
       res.status(200).json({ accountMovements });
@@ -66,19 +59,15 @@ const getUsersTransactions = async (req, res, next) => {
 
 // make a new transaction
 const transferMoney = async (req, res, next) => {
-   /**
-    * @todo add date
-    * @todo verifyJwt
-    */
    try {
       const { moneyAmount, transactionUser, id } = req.body;
 
       if (!moneyAmount || !transactionUser || !id) return res.status(400).json({ message: `No enought information to complete transfer` });
 
       // decoded users info
-      // const { userID } = req.user;
+      const { userID } = req.user;
 
-      // if (id !== userID) return res.status(403).json({ message: `You are not authorized to access this information` });
+      if (id !== userID) return res.status(403).json({ message: `You are not authorized to access this information` });
 
       // find user that will recive money
       // transactionUser => is a type of id
@@ -119,35 +108,35 @@ const transferMoney = async (req, res, next) => {
 };
 
 //
-const getMonthlyTransactions = async (req, res, next) => {
-   /**
-    * @todo verifyJwt
-    * @todo stop filtering arr
-    */
+// const getMonthlyTransactions = async (req, res, next) => {
+//    /**
+//     * @todo verifyJwt
+//     * @todo stop filtering arr
+//     */
 
-   try {
-      const { id } = req.params;
+//    try {
+//       const { id } = req.params;
 
-      if (!id) return res.status(404).json({ message: `No data provided` });
+//       if (!id) return res.status(404).json({ message: `No data provided` });
 
-      const findUser = await userModel.findById(id);
+//       const findUser = await userModel.findById(id);
 
-      if (!findUser) return res.status(404).json({ message: `User not found` });
+//       if (!findUser) return res.status(404).json({ message: `User not found` });
 
-      // monthly account movements based on current month
-      const incomesSum = monthlyIncomesMovements(findUser);
-      const outcomesSum = monthlyOutcomesMovements(findUser);
+//       // monthly account movements based on current month
+//       const incomesSum = monthlyIncomesMovements(findUser);
+//       const outcomesSum = monthlyOutcomesMovements(findUser);
 
-      res.status(200).json({ incomesSum, outcomesSum });
+//       res.status(200).json({ incomesSum, outcomesSum });
 
-      // decoded users info
-      // const { userID } = req.user;
+//       // decoded users info
+//       // const { userID } = req.user;
 
-      // if (id !== userID) return res.status(403).json({ message: `You are not authorized to access this information` });
-   } catch (error) {
-      console.log(error);
-      next(error);
-   }
-};
+//       // if (id !== userID) return res.status(403).json({ message: `You are not authorized to access this information` });
+//    } catch (error) {
+//       console.log(error);
+//       next(error);
+//    }
+// };
 
-module.exports = { getUser, transferMoney, getMonthlyTransactions, getUsersTransactions };
+module.exports = { getUser, transferMoney, getUsersTransactions };

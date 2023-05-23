@@ -1,12 +1,14 @@
 import { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAxios } from '../../hooks/useAxios';
+import { LoadingButton } from '../../components/LoadingButton';
 
 export const Register = () => {
-   const { fetchData, data, loading, error, ready } = useAxios();
+   const { fetchData, loading, ready, contextHolder } = useAxios();
    const usernameRef = useRef();
    const emailRef = useRef();
    const passwordRef = useRef();
+   const navigate = useNavigate();
 
    const newUser = (e) => {
       e.preventDefault();
@@ -24,12 +26,15 @@ export const Register = () => {
 
    useEffect(() => {
       if (!ready) return;
-      // message git
+      setTimeout(() => {
+         navigate('/login');
+      }, 2000);
    }, [ready]);
 
    return (
       <form className='flex flex-col items-center justify-center gap-4 py-12 px-6 p-8 m-auto w-96 rounded-xl bg-white relative'>
-         <p className='text-center font-bold pb-6 text-xl'>Log in</p>
+         {contextHolder}
+         <p className='text-center font-bold pb-6 text-xl'>Register new account</p>
          <input ref={usernameRef} type='text' placeholder='username' />
          <input ref={emailRef} type='text' placeholder='email' />
          <input ref={passwordRef} type='password' placeholder='password' />
@@ -39,9 +44,13 @@ export const Register = () => {
                log in
             </Link>
          </p>
-         <button onClick={newUser} className='btn-primary mt-6'>
-            Sign in
-         </button>
+         {loading ? (
+            <LoadingButton />
+         ) : (
+            <button onClick={newUser} className='btn-primary mt-6'>
+               Sign in
+            </button>
+         )}
       </form>
    );
 };

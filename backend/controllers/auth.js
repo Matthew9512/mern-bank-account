@@ -18,7 +18,7 @@ const logIn = async (req, res, next) => {
 
       //   res.status(200).json({ message: `Login successfull, welcome ${findUser.username}` });
 
-      const accessToken = jwt.sign({ email, userID: findUser.id }, process.env.ACCESS_TOKEN, { expiresIn: '40s' });
+      const accessToken = jwt.sign({ email, userID: findUser.id }, process.env.ACCESS_TOKEN, { expiresIn: '10s' });
 
       const refreshToken = jwt.sign({ email, userID: findUser.id }, process.env.REFRESH_TOKEN, { expiresIn: '1d' });
 
@@ -28,7 +28,7 @@ const logIn = async (req, res, next) => {
          sameSite: 'None', //cross-site cookie
          maxAge: 7 * 24 * 60 * 60 * 1000, //cookie expiry: set to match rT
       });
-
+      console.log(refreshToken);
       res.status(200).json({ accessToken, message: `Login successful, welcome back ${findUser.username}` });
    } catch (error) {
       console.log(error);
@@ -59,6 +59,19 @@ const signIn = async (req, res, next) => {
    }
 };
 
+const logOut = async (req, res, next) => {
+   try {
+      const cookies = req.cookies;
+      if (!cookies?.jwt) return res.sendStatus(204); //No content
+      // res.clearCookie('jwt', { httpOnly: true, sameSite: 'None' });
+      res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
+      res.status(200).json({ message: `Logout successfull` });
+   } catch (error) {
+      console.log(error);
+      next(error);
+   }
+};
+
 const deleteAcc = async (req, res, next) => {
    /**
     * @todo verifyJwt
@@ -79,4 +92,4 @@ const deleteAcc = async (req, res, next) => {
    }
 };
 
-module.exports = { logIn, signIn, deleteAcc };
+module.exports = { logIn, signIn, logOut, deleteAcc };

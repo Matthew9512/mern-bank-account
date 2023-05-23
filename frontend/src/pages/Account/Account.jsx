@@ -6,11 +6,11 @@ import { MontlyAccountOutcomes } from './Components/MontlyAccountOutcomes';
 import { MontlyAccountIncomes } from './Components/MontlyAccountIncomes';
 import { AccountNavbar } from './Components/AccountNavbar';
 import { Footer } from './Components/Footer';
-import { useAxios } from '../../hooks/useAxios';
+import { useAuthAxios } from '../../hooks/useAuthAxios';
 import { LoadingSpinner } from '../../components/LoadingSpinner';
 
 export const Account = () => {
-   const { fetchData, data, loading, error, ready } = useAxios();
+   const { fetchData, data, loading, error } = useAuthAxios();
    const { id } = useParams();
 
    useEffect(() => {
@@ -18,7 +18,7 @@ export const Account = () => {
          url: `/account/user/${id}`,
       });
    }, [id]);
-   console.log(error);
+
    if (error) return <p>eeeee</p>;
    if (!data) return <LoadingSpinner loading={loading} />;
 

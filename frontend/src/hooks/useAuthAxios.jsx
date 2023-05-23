@@ -1,13 +1,9 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
+import { authAxios } from '../utils/axiosHelpers';
 
-axios.defaults.baseURL = `http://localhost:8000`;
-axios.defaults.withCredentials = true;
-axios.defaults.timeout = 5000;
-
-export const useAxios = () => {
+export const useAuthAxios = () => {
    const [loading, setLoading] = useState(false);
    const [error, setError] = useState(false);
    const [data, setData] = useState(false);
@@ -18,7 +14,7 @@ export const useAxios = () => {
    const fetchData = async (method) => {
       setLoading(true);
       try {
-         const res = await axios.request(method);
+         const res = await authAxios.request(method);
          const resData = await res.data;
          console.log(res.data);
          setData(resData);

@@ -14,9 +14,9 @@ const refreshJwt = (req, res) => {
          return res.status(403).json({ message: `You are not authorized to access this information` });
       }
       const findUser = await userModel.findOne({ _id: decodedInfo.userID });
-      if (!findUser) return res.status(401).json({ message: 'User not found, refresh' });
+      if (!findUser) return res.status(401).json({ message: 'User not found' });
 
-      const accessToken = jwt.sign({ email: findUser.email, userID: findUser.id }, process.env.ACCESS_TOKEN, { expiresIn: '20s' });
+      const accessToken = jwt.sign({ email: findUser.email, userID: findUser.id }, process.env.ACCESS_TOKEN, { expiresIn: '10s' });
 
       res.json({ accessToken });
    });

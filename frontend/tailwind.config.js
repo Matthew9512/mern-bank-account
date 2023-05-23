@@ -15,8 +15,20 @@ export default {
          blue: '#01579d',
          red: '#ed1c1c',
       },
-      extend: {},
+      extend: {
+         keyframes: {
+            slide: {
+               '10%': { transform: 'translateY(0.5rem)', opacity: '0.2' },
+               '20%': { transform: 'translateY(1rem)', opacity: '1' },
+               '100%': { transform: 'translateY(1rem)', opacity: '1' },
+            },
+         },
+         animation: {
+            'slide-message-box': 'slide 2s linear forwards',
+         },
+      },
       fontFamily: {},
    },
    plugins: [require('daisyui')],
 };
+// absolute top-8 left-1/2 -translate-x-1/2

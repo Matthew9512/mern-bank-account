@@ -1,15 +1,13 @@
-import { useEffect, useRef } from 'react';
-import { useAxios } from '../hooks/useAxios';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useRef } from 'react';
+import { useAuthAxios } from '../hooks/useAuthAxios';
+import { useParams } from 'react-router-dom';
 import { LoadingButton } from '../components/LoadingButton';
-import { Message } from '../components/Message';
 
 export const NewTransaction = () => {
-   const { fetchData, data, loading, error, ready } = useAxios();
+   const { fetchData, loading, contextHolder } = useAuthAxios();
    const recipientRef = useRef();
    const amountRef = useRef();
    const { id } = useParams();
-   const navigate = useNavigate();
 
    const makeTransaction = (e) => {
       e.preventDefault();
@@ -26,17 +24,9 @@ export const NewTransaction = () => {
       });
    };
 
-   useEffect(() => {
-      if (!ready) return;
-      //  ==> message <==
-      setTimeout(() => {
-         navigate(-1);
-      }, 2000);
-   }, [ready]);
-
    return (
       <>
-         <Message />
+         {contextHolder}
          <form className='flex flex-col items-start justify-center py-12 px-6 p-8 m-auto w-96 rounded-xl bg-white relative'>
             <p className='font-bold tracking-wide pb-4 mx-auto'>Make a new transaction</p>
             <label className='pt-4' htmlFor='account-number'>
