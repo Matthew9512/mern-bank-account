@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
-import { useAxios } from '../../hooks/useAxios';
-import { LoadingButton } from '../../components/LoadingButton';
+import { useAxios } from '../hooks/useAxios';
+import { LoadingButton } from '../components/LoadingButton';
 
 export const Login = () => {
    const passwordRef = useRef();

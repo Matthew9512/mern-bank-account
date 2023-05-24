@@ -5,7 +5,7 @@ const userSchema = new Schema({
    username: String,
    email: String,
    password: String,
-   totalMoney: Number,
+   totalMoney: { type: Number, default: 0 },
    accountNumber: Number,
    accountMovements: [
       {

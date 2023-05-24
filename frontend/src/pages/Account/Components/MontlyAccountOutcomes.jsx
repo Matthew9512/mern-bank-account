@@ -21,6 +21,7 @@ export function MontlyAccountOutcomes({ data }) {
    };
 
    if (!data) return <LoadingButton />;
+   // if (!data?.monthlyOutcomesMovements) return;
 
    return (
       <div>

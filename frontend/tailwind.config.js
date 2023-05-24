@@ -29,6 +29,5 @@ export default {
       },
       fontFamily: {},
    },
-   plugins: [require('daisyui')],
+   plugins: [],
 };
-// absolute top-8 left-1/2 -translate-x-1/2

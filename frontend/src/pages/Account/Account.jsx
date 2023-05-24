@@ -5,7 +5,6 @@ import { UsersDetails } from './Components/UsersDetails';
 import { MontlyAccountOutcomes } from './Components/MontlyAccountOutcomes';
 import { MontlyAccountIncomes } from './Components/MontlyAccountIncomes';
 import { AccountNavbar } from './Components/AccountNavbar';
-import { Footer } from './Components/Footer';
 import { useAuthAxios } from '../../hooks/useAuthAxios';
 import { LoadingSpinner } from '../../components/LoadingSpinner';
 
@@ -25,7 +24,7 @@ export const Account = () => {
    return (
       <section className='w-4/5 mx-auto rounded-xl bg-white lg:w-4/5 xl:w-3/5'>
          {/* <section className='w-4/5 mx-auto my-16 rounded-xl bg-white lg:w-4/5 xl:w-3/5'> */}
-         <AccountNavbar data={data} />
+         <AccountNavbar data={data} id={id} />
          <div className='flex flex-col justify-center items-center gap-8 px-12 py-8 lg:flex-row lg:items-start'>
             <div className='lg:border-r border-grey lg:w-1/2'>
                <div className='flex gap-4 ml-2 font-bold'>
@@ -41,7 +40,6 @@ export const Account = () => {
                <TransactionsList data={data} loading={loading} />
             </div>
          </div>
-         <Footer />
       </section>
    );
 };
