@@ -12,7 +12,6 @@ export const Register = () => {
 
    const newUser = (e) => {
       e.preventDefault();
-
       fetchData({
          url: `/auth/signin`,
          method: `POST`,

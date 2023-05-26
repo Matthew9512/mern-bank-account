@@ -2,20 +2,30 @@ import { Link } from 'react-router-dom';
 
 export const Welcome = () => {
    return (
-      <div className='mx-auto pt-20'>
-         <h1 className='text-3xl text-light-green'>Expense tracker</h1>
-         <p>
-            To get started{' '}
-            <Link className='link' to={'/login'}>
-               log in
-            </Link>{' '}
-            or
-            <Link className='link' to={'/register'}>
-               {' '}
-               create
-            </Link>{' '}
-            an account
-         </p>
+      <div className='mx-auto h-screen flex justify-center items-center flex-col lg:flex-row '>
+         <div className='p-8 font-bold '>
+            <h1 className='text-4xl font-bold tracking-wider text-light-green'>Bankers</h1>
+            <p className='py-8'>
+               Lorem ipsum dolor sit amet consectetur <br /> adipisicing elit. Numquam et eum tempora culpa vero error?
+            </p>
+            <span>Get Started Now By:</span>
+            <p className='pt-8'>
+               <Link className='btn' to={'/login'}>
+                  Log In
+               </Link>
+               <span className='px-4'>OR</span>
+               <Link className='btn' to={'/register'}>
+                  Creating New Account
+               </Link>
+            </p>
+         </div>
+         <img className='lg:w-[60vw] w-full  object-cover' src='../../bank-people.jpg' alt='home-page-bank-img' />
+         <div className='absolute bottom-2'>
+            <a href='https://www.freepik.com/free-vector/banking-industry-concept-illustration_35262247.htm#query=bank&position=21&from_view=search&track=sph'>
+               Image by <span className='link'>storyset</span>
+            </a>{' '}
+            on Freepik
+         </div>
       </div>
    );
 };

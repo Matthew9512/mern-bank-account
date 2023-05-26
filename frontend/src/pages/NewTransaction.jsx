@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { useAuthAxios } from '../hooks/useAuthAxios';
 import { useParams } from 'react-router-dom';
 import { LoadingButton } from '../components/LoadingButton';
+import { validateMoneyInput } from '../utils/validateMoney';
 
 export const NewTransaction = () => {
    const { fetchData, loading, contextHolder } = useAuthAxios();
@@ -24,14 +25,6 @@ export const NewTransaction = () => {
       });
    };
 
-   // prevent typing more than 2 decimal numbers
-   const validateMoneyInput = (e) => {
-      var regex = /^\d{0,}(\.{0,1}\d{0,2})?$/;
-      if (!regex.test(e.target.value)) {
-         e.target.value = e.target.value.slice(0, -1);
-      }
-   };
-
    return (
       <>
          {contextHolder}
@@ -44,7 +37,7 @@ export const NewTransaction = () => {
             <label className='pt-4' htmlFor='amount-money'>
                Sum
             </label>
-            <input onInput={validateMoneyInput} ref={amountRef} type='number' id='amount-money' placeholder='Type amount of money ($)' />
+            <input onChange={validateMoneyInput} ref={amountRef} type='number' id='amount-money' placeholder='Type amount of money ($)' />
             <label className='pt-4' htmlFor='title'>
                Title
             </label>

@@ -22,4 +22,13 @@
    .btn {
       @apply p-3 rounded-md bg-light-green text-white text-center mt-12 hover:bg-dark-green;
    }
+   .disabled {
+      @apply text-grey cursor-not-allowed hover:bg-light-white;
+   }
+   .pagIcon {
+      @apply hover:bg-dark-white hover:border-black;
+   }
+}
+.dropdown:hover .dropdown-menu {
+   display: block;
 }

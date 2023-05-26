@@ -12,21 +12,11 @@ export default {
          'light-grey': '#606f7b',
          'dark-grey': '#3d4852',
          'light-black': '#2a2a2ab0',
+         black: '#121212',
          blue: '#01579d',
          red: '#ed1c1c',
       },
-      extend: {
-         keyframes: {
-            slide: {
-               '10%': { transform: 'translateY(0.5rem)', opacity: '0.2' },
-               '20%': { transform: 'translateY(1rem)', opacity: '1' },
-               '100%': { transform: 'translateY(1rem)', opacity: '1' },
-            },
-         },
-         animation: {
-            'slide-message-box': 'slide 2s linear forwards',
-         },
-      },
+      extend: {},
       fontFamily: {},
    },
    plugins: [],

@@ -61,22 +61,13 @@ const getUsersTransactions = async (req, res, next) => {
 const transferMoney = async (req, res, next) => {
    try {
       const { moneyAmount, transactionUser, id } = req.body;
-      // const { moneyAmount, transactionUser, id, loan } = req.body;
 
       if (!moneyAmount || !transactionUser || !id) return res.status(400).json({ message: `No enought information to complete transfer` });
 
+      // decoded users info
       const { userID } = req.user;
 
-      // if user requested loan
-      // if (loan) {
-      // decoded users info
-
-      // if (transactionUser !== userID) return res.status(403).json({ message: `You are not authorized to access this information` });
-      // } else {
-      // decoded users info
-
       if (id !== userID) return res.status(403).json({ message: `You are not authorized to access this information` });
-      // }
 
       // find user that will recive money
       // transactionUser => is a type of id
@@ -112,9 +103,7 @@ const transferMoney = async (req, res, next) => {
          })
          .orFail();
 
-      // if user requested loan
-      // if (loan) return res.status(200).json({ message: `Your loan request was successfull` });
-      res.status(200).json({ message: `Transaction successfull, you now have ${checkTransaction}€ left` });
+      res.status(200).json({ message: `Transaction successfull, you now have ${checkTransaction}$ left` });
    } catch (error) {
       console.log(error);
       next(error);
@@ -123,36 +112,49 @@ const transferMoney = async (req, res, next) => {
 
 // load money from bank
 const loanMoney = async (req, res, next) => {
-   //    try {
-   //       const { moneyAmount, transactionUser, id } = req.body;
-   //       if (!moneyAmount || !transactionUser || !id) return res.status(400).json({ message: `No enought information to complete transfer` });
-   //       // decoded users info
-   //       const { userID } = req.user;
-   //       if (id !== userID) return res.status(403).json({ message: `You are not authorized to access this information` });
-   //       const findUser = await userModel.findById(id);
-   //       const transactionTO = await userModel.findById(transactionUser);
-   //       const usersMoney = findUser.totalMoney;
-   //       const checkTransaction = usersMoney - moneyAmount;
-   //       updateTransactionToUser(req.body, id, findUser.username);
-   //       // update user that makes transaction
-   //       await findUser
-   //          .updateOne({
-   //             $set: { totalMoney: checkTransaction },
-   //             $addToSet: {
-   //                accountMovements: {
-   //                   movementType: 'outcome',
-   //                   moneyAmount,
-   //                   transactionUser,
-   //                   user: transactionTO.username,
-   //                },
-   //             },
-   //          })
-   //          .orFail();
-   //       res.status(200).json({ message: `Transaction successfull, you now have ${checkTransaction}€ left` });
-   //    } catch (error) {
-   //       console.log(error);
-   //       next(error);
-   //    }
+   const _bankID = '64689e52f958fcc519efd815';
+
+   try {
+      const { moneyAmount, id } = req.body;
+
+      if (!moneyAmount || !id) return res.status(400).json({ message: `No enought information to complete transfer` });
+
+      // decoded users info
+      const { userID } = req.user;
+      if (id !== userID) return res.status(403).json({ message: `You are not authorized to access this information` });
+
+      // loan user === bank
+      const findUser = await userModel.findById(_bankID);
+
+      // find user that will recive money
+      // transactionUser => is a type of id
+      const transactionTO = await userModel.findById(id);
+
+      //    update user that gets money from transaction
+      updateTransactionToUser({ moneyAmount, transactionUser: id }, _bankID, findUser.username);
+
+      const checkTransaction = transactionTO.totalMoney + +moneyAmount;
+
+      // update user that makes transaction
+      await findUser
+         .updateOne({
+            $set: { totalMoney: findUser.totalMoney - +moneyAmount },
+            $addToSet: {
+               accountMovements: {
+                  movementType: 'outcome',
+                  moneyAmount,
+                  transactionUser: transactionTO.username,
+                  user: findUser.username,
+               },
+            },
+         })
+         .orFail();
+
+      res.status(200).json({ message: `Your loan request was successful, your now have ${checkTransaction}$` });
+   } catch (error) {
+      console.log(error);
+      next(error);
+   }
 };
 
 module.exports = { getUser, transferMoney, getUsersTransactions, loanMoney };

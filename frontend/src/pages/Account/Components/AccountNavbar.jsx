@@ -1,62 +1,59 @@
-import { logOutIcon, userIcon } from '../../../utils/icons';
-import { useAuthAxios } from '../../../hooks/useAuthAxios';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
+import { message } from 'antd';
+import { logOutIcon, userIcon, arrowDownIcon, removeAccount } from '../../../utils/icons';
+import { useAuthAxios } from '../../../hooks/useAuthAxios';
 import { removeToken } from '../../../utils/axiosHelpers';
 import { LoadingButton } from '../../../components/LoadingButton';
+import { LoanMoney } from './LoanMoney';
 
-export const AccountNavbar = ({ data, id }) => {
-   const { fetchData, contextHolder, ready, loading } = useAuthAxios();
-   // const [rerender, setRerender] = useState(false);
+export const AccountNavbar = ({ data, id, setRerender }) => {
+   const { fetchData, contextHolder, loading } = useAuthAxios();
    const navigate = useNavigate();
-   const loanAmountRef = useRef();
 
    const logOut = () => {
+      message.success(`Logout successful`, 2);
+      removeToken();
+      setTimeout(() => {
+         navigate('/');
+      }, 2000);
+   };
+
+   const removeAcc = () => {
       fetchData({
-         url: '/auth/logout',
-         method: 'POST',
+         url: '/auth/delete',
+         method: 'DELETE',
+         data: { id },
       });
    };
 
-   // const requestLoan = () => {
-   //    loan = true;
-   //    fetchData({
-   //       url: '/account/new-transaction',
-   //       method: 'POST',
-   //       data: {
-   //          moneyAmount: loanAmountRef.current.value,
-   //          transactionUser: id,
-   //          id: '64689e52f958fcc519efd815', // bank id
-   //          loan: true,
-   //       },
-   //    });
-   // };
-
-   useEffect(() => {
-      console.log(loan);
-      if (!ready) return;
-      setTimeout(() => {
-         removeToken();
-         navigate('/');
-      }, 2000);
-   }, [ready]);
-
    return (
-      <nav className='p-2 flex flex-row-reverse justify-between items-center text-dark-grey border-b border-grey mb-4'>
-         {contextHolder}
-         <div className='flex gap-4 justify-end px-2 cursor-pointer'>
-            {loading ? <LoadingButton /> : <span onClick={logOut}>{logOutIcon}</span>}
-            <span className='flex gap-1'>
-               {userIcon}
-               {data.user?.username}
-            </span>
-         </div>
-         {/*  */}
-         {/* <div className='flex gap-4 w-40'>
-            <button onClick={requestLoan}>Loan</button>
-            <input ref={loanAmountRef} type='text' name='' id='' placeholder='1000' />
-         </div> */}
-         {/*  */}
-      </nav>
+      <>
+         <nav className='p-2 flex flex-row-reverse justify-between items-center text-dark-grey border-b border-grey mb-4'>
+            {contextHolder}
+            <div className='dropdown relative'>
+               <div className='flex items-center'>
+                  <span className='flex gap-1'>
+                     {userIcon}
+                     {data.user?.username}
+                  </span>
+                  {arrowDownIcon}
+               </div>
+               {/* drop menu */}
+               <ul className='dropdown-menu absolute flex flex-col justify-center right-1 w-48 z-50 p-4 rounded-lg hidden bg-grey'>
+                  {loading ? (
+                     <LoadingButton />
+                  ) : (
+                     <span className='flex gap-2 mb-2 cursor-pointer' onClick={logOut}>
+                        {logOutIcon} Log out
+                     </span>
+                  )}
+                  <span onClick={removeAcc} className='flex gap-2 cursor-pointer'>
+                     {removeAccount} Delete account
+                  </span>
+               </ul>
+            </div>
+            <LoanMoney id={id} setRerender={setRerender} />
+         </nav>
+      </>
    );
 };

@@ -12,10 +12,10 @@ export const TransactionsList = ({ data, loading }) => {
 
    return (
       <>
-         {/* <LoadingSpinner loading={loading} /> */}
+         <LoadingSpinner loading={loading} />
          <p className='font-bold text-lg'>Transactions:</p>
          {!resData?.accountMovements.length ? (
-            <p className='pt-4'>No transactions yet </p>
+            <p className='pt-4'>No transactions history yet </p>
          ) : (
             resData?.accountMovements.map((value) => {
                return (

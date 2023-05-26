@@ -1,10 +1,10 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, Navigate } from 'react-router-dom';
 import { getToken } from '../utils/axiosHelpers';
 
 export const ProtectedRoute = () => {
-   // const token = getToken();
+   const token = getToken();
 
-   // if (!token) return <p className='w-1/2'>You have to access to this information, please log in or create new account redirecting</p>;
+   if (!token) return <Navigate to={'/'} />;
 
    return (
       <>

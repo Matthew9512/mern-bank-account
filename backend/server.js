@@ -4,15 +4,16 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const corsOptions = require('./config/corsOptions');
 const cacheControl = require('./middleware/cacheControl');
+const compression = require('compression');
 
 const app = express();
 const PORT = 8000;
 const connDB = require('./config/connDB');
 const verifyJwt = require('./middleware/verifyJwt');
 
-app.use(cors(corsOptions));
 // app.use(cors());
-// app.use(compression())
+app.use(cors(corsOptions));
+app.use(compression());
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

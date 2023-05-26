@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import { useAxios } from '../hooks/useAxios';
 import { LoadingButton } from '../components/LoadingButton';
+import { autoLogOut } from '../utils/autoLogOut';
 
 export const Login = () => {
    const passwordRef = useRef();
@@ -24,8 +25,9 @@ export const Login = () => {
 
    useEffect(() => {
       if (!ready) return;
-      const { userID } = jwtDecode(data?.accessToken);
-      localStorage.setItem('access__token', JSON.stringify(data?.accessToken));
+      const { userID, exp, iat } = jwtDecode(data?.accessToken);
+      autoLogOut(exp, iat);
+      sessionStorage.setItem('access__token', JSON.stringify(data?.accessToken));
       navigate(`/account/user/${userID}`);
    }, [ready]);
 
