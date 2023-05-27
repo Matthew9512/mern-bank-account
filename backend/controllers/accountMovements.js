@@ -71,7 +71,7 @@ const transferMoney = async (req, res, next) => {
 
       // find user that will recive money
       // transactionUser => is a type of id
-      const transactionTO = await userModel.findById(transactionUser);
+      const transactionTO = await userModel.findOne({ accountNumber: transactionUser });
 
       if (!transactionTO) return res.status(409).json({ message: `Cant make transaction, provided user dont egsist` });
 
@@ -112,7 +112,7 @@ const transferMoney = async (req, res, next) => {
 
 // load money from bank
 const loanMoney = async (req, res, next) => {
-   const _bankID = '64689e52f958fcc519efd815';
+   const _bankAccNumber = '656c1cb64b8f9572';
 
    try {
       const { moneyAmount, id } = req.body;
@@ -124,14 +124,14 @@ const loanMoney = async (req, res, next) => {
       if (id !== userID) return res.status(403).json({ message: `You are not authorized to access this information` });
 
       // loan user === bank
-      const findUser = await userModel.findById(_bankID);
+      const findUser = await userModel.findOne({ accountNumber: _bankAccNumber });
 
       // find user that will recive money
       // transactionUser => is a type of id
       const transactionTO = await userModel.findById(id);
 
       //    update user that gets money from transaction
-      updateTransactionToUser({ moneyAmount, transactionUser: id }, _bankID, findUser.username);
+      updateTransactionToUser({ moneyAmount, transactionUser: transactionTO.accountNumber }, _bankAccNumber, findUser.username);
 
       const checkTransaction = transactionTO.totalMoney + +moneyAmount;
 

@@ -12,6 +12,10 @@ export const Register = () => {
 
    const newUser = (e) => {
       e.preventDefault();
+
+      if (!emailRef.current.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) return;
+      if (passwordRef.current?.value.length < 3 || usernameRef.current?.value.length < 3 || !emailRef.current.value) return;
+
       fetchData({
          url: `/auth/signin`,
          method: `POST`,
@@ -34,9 +38,9 @@ export const Register = () => {
       <form className='flex flex-col items-center justify-center gap-4 py-12 px-6 p-8 m-auto w-96 rounded-xl bg-white relative'>
          {contextHolder}
          <p className='text-center font-bold pb-6 text-xl'>Register new account</p>
-         <input ref={usernameRef} type='text' placeholder='username' />
-         <input ref={emailRef} type='text' placeholder='email' />
-         <input ref={passwordRef} type='password' placeholder='password' />
+         <input ref={usernameRef} minLength={3} type='text' placeholder='username' className='invalid' />
+         <input ref={emailRef} type='email' placeholder='email' className='invalid' />
+         <input ref={passwordRef} minLength={3} type='password' placeholder='password' className='invalid' />
          <p>
             Have an account?{' '}
             <Link className='link' to={'/login'}>

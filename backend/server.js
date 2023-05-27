@@ -2,16 +2,15 @@ require('dotenv').config();
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const compression = require('compression');
 const corsOptions = require('./config/corsOptions');
 const cacheControl = require('./middleware/cacheControl');
-const compression = require('compression');
 
 const app = express();
 const PORT = 8000;
 const connDB = require('./config/connDB');
 const verifyJwt = require('./middleware/verifyJwt');
 
-// app.use(cors());
 app.use(cors(corsOptions));
 app.use(compression());
 app.use(cookieParser());

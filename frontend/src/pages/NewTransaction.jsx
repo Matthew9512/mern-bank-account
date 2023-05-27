@@ -12,7 +12,7 @@ export const NewTransaction = () => {
 
    const makeTransaction = (e) => {
       e.preventDefault();
-      if (!amountRef.current.value || !recipientRef.current.value) return; // message
+      if (!amountRef.current.value || !recipientRef.current.value) return;
 
       fetchData({
          url: `account/new-transaction`,
@@ -33,11 +33,19 @@ export const NewTransaction = () => {
             <label className='pt-4' htmlFor='account-number'>
                Reciver
             </label>
-            <input ref={recipientRef} type='text' id='account-number' placeholder='Type account number' />
+            <input ref={recipientRef} minLength={1} className='invalid' type='text' id='account-number' placeholder='Type account number' />
             <label className='pt-4' htmlFor='amount-money'>
                Sum
             </label>
-            <input onChange={validateMoneyInput} ref={amountRef} type='number' id='amount-money' placeholder='Type amount of money ($)' />
+            <input
+               onChange={validateMoneyInput}
+               ref={amountRef}
+               minLength={1}
+               className='invalid'
+               type='number'
+               id='amount-money'
+               placeholder='Type amount of money ($)'
+            />
             <label className='pt-4' htmlFor='title'>
                Title
             </label>

@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import { useAxios } from '../hooks/useAxios';
 import { LoadingButton } from '../components/LoadingButton';
-import { autoLogOut } from '../utils/autoLogOut';
 
 export const Login = () => {
    const passwordRef = useRef();
@@ -13,6 +12,10 @@ export const Login = () => {
 
    const loginUser = (e) => {
       e.preventDefault();
+
+      if (!emailRef.current.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) return;
+      if (passwordRef.current?.value.length < 3 || !emailRef.current.value) return;
+
       fetchData({
          url: '/auth/login',
          method: 'POST',
@@ -25,8 +28,7 @@ export const Login = () => {
 
    useEffect(() => {
       if (!ready) return;
-      const { userID, exp, iat } = jwtDecode(data?.accessToken);
-      autoLogOut(exp, iat);
+      const { userID } = jwtDecode(data?.accessToken);
       sessionStorage.setItem('access__token', JSON.stringify(data?.accessToken));
       navigate(`/account/user/${userID}`);
    }, [ready]);
@@ -36,8 +38,8 @@ export const Login = () => {
          {contextHolder}
          <form className='flex flex-col items-center justify-center gap-4 py-12 px-6 p-8 m-auto w-96 rounded-xl bg-white relative'>
             <p className='text-center font-bold pb-6 text-xl'>Log in</p>
-            <input ref={emailRef} type='text' placeholder='email' />
-            <input ref={passwordRef} type='password' placeholder='password' />
+            <input ref={emailRef} className='invalid' type='email' placeholder='email' />
+            <input ref={passwordRef} minLength={3} type='password' placeholder='password' className='invalid' />
             <p>
                Dont have an account{' '}
                <Link className='link' to={'/register'}>
@@ -47,7 +49,7 @@ export const Login = () => {
             {loading ? (
                <LoadingButton />
             ) : (
-               <button onClick={loginUser} className='mt-6'>
+               <button onClick={loginUser} className='mt-6 group-invalid:pointer-events-none group-invalid:opacity-30'>
                   Log in
                </button>
             )}

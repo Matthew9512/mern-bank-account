@@ -1,12 +1,16 @@
 import { Link } from 'react-router-dom';
 import { formatDistanceStrict } from 'date-fns';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { incomeIcon, paymentIcon } from '../../../utils/icons';
 import { LoadingSpinner } from '../../../components/LoadingSpinner';
 import { Pagination } from './Pagination';
 
 export const TransactionsList = ({ data, loading }) => {
-   const [resData, setResData] = useState(data.user);
+   const [resData, setResData] = useState();
+
+   useEffect(() => {
+      setResData(data.user);
+   }, [data]);
 
    if (!resData) return <LoadingSpinner loading={loading} />;
 

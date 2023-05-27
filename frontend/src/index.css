@@ -28,6 +28,9 @@
    .pagIcon {
       @apply hover:bg-dark-white hover:border-black;
    }
+   .invalid {
+      @apply invalid:border-red;
+   }
 }
 .dropdown:hover .dropdown-menu {
    display: block;

@@ -1,6 +1,7 @@
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const userModel = require('../models/userModel');
-const jwt = require('jsonwebtoken');
+const { createUniqueAccNumber } = require('../utils/userActions');
 
 const logIn = async (req, res, next) => {
    try {
@@ -16,7 +17,7 @@ const logIn = async (req, res, next) => {
 
       if (!verifyPass) return res.status(404).json({ message: `Wrong username or password` });
 
-      const accessToken = jwt.sign({ email, userID: findUser.id }, process.env.ACCESS_TOKEN, { expiresIn: '10s' });
+      const accessToken = jwt.sign({ email, userID: findUser.id }, process.env.ACCESS_TOKEN, { expiresIn: '1d' });
 
       res.status(200).json({ accessToken, message: `Login successful, welcome back ${findUser.username}` });
    } catch (error) {
@@ -37,23 +38,11 @@ const signIn = async (req, res, next) => {
 
       const bcryptPass = await bcrypt.hash(password, 10);
 
-      // const accountNumber =
+      const accountNumber = await createUniqueAccNumber();
 
-      const newUser = await userModel.create({ password: bcryptPass, email, username });
+      await userModel.create({ password: bcryptPass, email, username, accountNumber });
 
       return res.status(201).json({ message: `Account successfully created, welcome ${username}` });
-   } catch (error) {
-      console.log(error);
-      next(error);
-   }
-};
-
-const logOut = async (req, res, next) => {
-   try {
-      // const cookies = req.cookies;
-      // if (!cookies?.jwt) return res.sendStatus(204); //No content
-      // res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
-      res.status(200).json({ message: `Logout successfull` });
    } catch (error) {
       console.log(error);
       next(error);
@@ -82,4 +71,4 @@ const deleteAcc = async (req, res, next) => {
    }
 };
 
-module.exports = { logIn, signIn, logOut, deleteAcc };
+module.exports = { logIn, signIn, deleteAcc };

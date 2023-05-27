@@ -6,7 +6,7 @@ const userSchema = new Schema({
    email: String,
    password: String,
    totalMoney: { type: Number, default: 0 },
-   accountNumber: Number,
+   accountNumber: String,
    accountMovements: [
       {
          movementType: String,

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { message } from 'antd';
+import { useEffect } from 'react';
 import { logOutIcon, userIcon, arrowDownIcon, removeAccount } from '../../../utils/icons';
 import { useAuthAxios } from '../../../hooks/useAuthAxios';
 import { removeToken } from '../../../utils/axiosHelpers';
@@ -7,15 +7,12 @@ import { LoadingButton } from '../../../components/LoadingButton';
 import { LoanMoney } from './LoanMoney';
 
 export const AccountNavbar = ({ data, id, setRerender }) => {
-   const { fetchData, contextHolder, loading } = useAuthAxios();
+   const { fetchData, contextHolder, loading, ready } = useAuthAxios();
    const navigate = useNavigate();
 
    const logOut = () => {
-      message.success(`Logout successful`, 2);
       removeToken();
-      setTimeout(() => {
-         navigate('/');
-      }, 2000);
+      navigate('/');
    };
 
    const removeAcc = () => {
@@ -25,6 +22,14 @@ export const AccountNavbar = ({ data, id, setRerender }) => {
          data: { id },
       });
    };
+
+   useEffect(() => {
+      if (!ready) return;
+      removeToken();
+      setTimeout(() => {
+         navigate('/');
+      }, 1500);
+   }, [ready]);
 
    return (
       <>
@@ -47,9 +52,13 @@ export const AccountNavbar = ({ data, id, setRerender }) => {
                         {logOutIcon} Log out
                      </span>
                   )}
-                  <span onClick={removeAcc} className='flex gap-2 cursor-pointer'>
-                     {removeAccount} Delete account
-                  </span>
+                  {loading ? (
+                     <LoadingButton />
+                  ) : (
+                     <span onClick={removeAcc} className='flex gap-2 cursor-pointer'>
+                        {removeAccount} Delete account
+                     </span>
+                  )}
                </ul>
             </div>
             <LoanMoney id={id} setRerender={setRerender} />
