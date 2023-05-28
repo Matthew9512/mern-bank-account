@@ -20,13 +20,11 @@ export const useAxios = () => {
       try {
          const res = await axios.request(method);
          const resData = await res.data;
-         console.log(res.data);
          setData(resData);
          setReady(true);
          if (resData?.message) messageApi.success(resData?.message, 2);
       } catch (error) {
          if (error.request.status === 0) return navigate('/server-down');
-         console.log(error.response.data.message);
          messageApi.error(error.response.data?.message, 2);
          setError(error.response.data.message);
       } finally {

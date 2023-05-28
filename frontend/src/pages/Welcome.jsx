@@ -19,8 +19,8 @@ export const Welcome = () => {
                </Link>
             </p>
          </div>
-         <img className='lg:w-[55vw] w-full object-cover' src='../../bank-people.jpg' alt='home-page-bank-img' />
-         <div className='absolute bottom-2'>
+         <img className='lg:w-[55vw] w-full object-cover' src='../../bank-people-com.jpg' alt='home-page-bank-img' />
+         <div className='absolute bottom-2 font-bold'>
             <a href='https://www.freepik.com/free-vector/banking-industry-concept-illustration_35262247.htm#query=bank&position=21&from_view=search&track=sph'>
                Image by <span className='link'>storyset</span>
             </a>{' '}

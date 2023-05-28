@@ -5,8 +5,9 @@ import { incomeIcon, paymentIcon } from '../../../utils/icons';
 import { LoadingSpinner } from '../../../components/LoadingSpinner';
 import { Pagination } from './Pagination';
 
-export const TransactionsList = ({ data, loading }) => {
+export const TransactionsList = ({ data }) => {
    const [resData, setResData] = useState();
+   const [loading, setLoading] = useState(false);
 
    useEffect(() => {
       setResData(data.user);
@@ -39,7 +40,11 @@ export const TransactionsList = ({ data, loading }) => {
                );
             })
          )}
-         {!data?.user?.accountMovements.length ? '' : <Pagination setResData={setResData} numberOfPages={data?.numberOfPages} />}
+         {!data?.user?.accountMovements.length ? (
+            ''
+         ) : (
+            <Pagination setResData={setResData} setLoading={setLoading} numberOfPages={data?.numberOfPages} />
+         )}
          <Link to={`/account/new-transaction/${data.user?._id}`} className='btn'>
             + New Transaction
          </Link>

@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useAuthAxios } from '../../../hooks/useAuthAxios';
 import { arrowLeftIcon, arrowRightIcon } from '../../../utils/icons';
 
-export const Pagination = ({ setResData, numberOfPages }) => {
+export const Pagination = ({ setResData, setLoading, numberOfPages }) => {
    const { fetchData, data, ready, contextHolder } = useAuthAxios();
    const { id } = useParams();
    const [currentPage, setCurrentPage] = useState(1);
@@ -18,6 +18,7 @@ export const Pagination = ({ setResData, numberOfPages }) => {
       if (click.dataset.action === 'next') currentPageRef.current++;
       else currentPageRef.current--;
 
+      setLoading(true);
       fetchData({
          url: `account/user/${id}/q?page=${currentPageRef.current}`,
       });
@@ -27,6 +28,7 @@ export const Pagination = ({ setResData, numberOfPages }) => {
       if (!ready) return;
       setResData(data);
       setCurrentPage(currentPageRef.current);
+      setLoading(false);
    }, [ready, data]);
 
    return (

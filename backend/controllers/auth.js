@@ -17,7 +17,7 @@ const logIn = async (req, res, next) => {
 
       if (!verifyPass) return res.status(404).json({ message: `Wrong username or password` });
 
-      const accessToken = jwt.sign({ email, userID: findUser.id }, process.env.ACCESS_TOKEN, { expiresIn: '1d' });
+      const accessToken = jwt.sign({ email, userID: findUser.id }, process.env.ACCESS_TOKEN, { expiresIn: '15m' });
 
       res.status(200).json({ accessToken, message: `Login successful, welcome back ${findUser.username}` });
    } catch (error) {
