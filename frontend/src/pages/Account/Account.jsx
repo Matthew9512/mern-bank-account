@@ -24,7 +24,7 @@ export const Account = () => {
    return (
       <section className='w-4/5 mx-auto rounded-xl bg-white lg:w-4/5 xl:w-3/5'>
          <AccountNavbar data={data} id={id} setRerender={setRerender} />
-         <div className='flex flex-col justify-center items-center gap-8 px-12 py-8 lg:flex-row lg:items-start'>
+         <div className='flex flex-col justify-center items-center gap-8 px-2 py-8 lg:flex-row lg:items-start'>
             <div className='lg:border-r border-grey lg:w-1/2'>
                <div className='flex gap-4 ml-2 font-bold'>
                   <MontlyAccountOutcomes data={data} />

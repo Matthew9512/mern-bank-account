@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 export const Welcome = () => {
    return (
       <div className='mx-auto overflow-hidden h-screen flex justify-center items-center flex-col lg:flex-row '>
-         <div className='p-8 font-bold '>
+         <div className='px-8 lg:p-8 font-bold '>
             <h1 className='text-4xl font-bold tracking-wider text-light-green'>Bankers</h1>
             <p className='py-8'>
                Lorem ipsum dolor sit amet consectetur <br /> adipisicing elit. Numquam et eum tempora culpa vero error?
