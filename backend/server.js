@@ -8,7 +8,6 @@ const corsOptions = require('./config/corsOptions');
 const cacheControl = require('./middleware/cacheControl');
 
 const app = express();
-const PORT = 8000;
 const connDB = require('./config/connDB');
 const verifyJwt = require('./middleware/verifyJwt');
 
@@ -25,6 +24,6 @@ app.use('/account', verifyJwt, require('./routes/accountMovementsRouter'));
 
 connDB();
 
-app.listen(PORT, () => {
+app.listen(process.env.PORT, () => {
    console.log(`server started`);
 });

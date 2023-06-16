@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
 
-axios.defaults.baseURL = `http://localhost:8000`;
+axios.defaults.baseURL = `https://mern-bank-account.onrender.com`;
 axios.defaults.withCredentials = true;
 axios.defaults.timeout = 5000;
 
