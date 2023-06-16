@@ -1,4 +1,8 @@
-const allowlist = ['http://example1.com', 'http://example2.com'];
+const allowlist = [
+   'https://mern-bank-account.netlify.app',
+   'https://mern-bank-account.onrender.com',
+   'http://localhost:8000',
+];
 const corsOptionsDelegate = function (req, callback) {
    let corsOptions;
    if (allowlist.indexOf(req.header('Origin')) !== -1) {
