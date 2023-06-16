@@ -6,7 +6,7 @@ const compression = require('compression');
 const helmet = require('helmet');
 const corsOptions = require('./config/corsOptions');
 const cacheControl = require('./middleware/cacheControl');
-
+const PORT = 8000;
 const app = express();
 const connDB = require('./config/connDB');
 const verifyJwt = require('./middleware/verifyJwt');
@@ -24,6 +24,6 @@ app.use('/account', verifyJwt, require('./routes/accountMovementsRouter'));
 
 connDB();
 
-app.listen(process.env.PORT, () => {
+app.listen(PORT, () => {
    console.log(`server started`);
 });
