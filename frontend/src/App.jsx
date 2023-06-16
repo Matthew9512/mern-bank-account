@@ -3,14 +3,14 @@ import { Suspense } from 'react';
 import { lazyLoad } from './utils/lazyLoad';
 import { LoadingSpinner } from './components/LoadingSpinner';
 
-const Welcome = lazyLoad('../pages/Welcome.jsx', 'Welcome');
-const Login = lazyLoad('../pages/Login.jsx', 'Login');
-const Register = lazyLoad('../pages/Register.jsx', 'Register');
-const Account = lazyLoad('../pages/Account/Account.jsx', 'Account');
-const Error = lazyLoad('../pages/Error.jsx', 'Error');
-const NewTransaction = lazyLoad('../pages/NewTransaction.jsx', 'NewTransaction');
-const ServerDown = lazyLoad('../pages/ServerDown.jsx', 'ServerDown');
-const ProtectedRoute = lazyLoad('../components/ProtectedRoute.jsx', 'ProtectedRoute');
+const Welcome = lazyLoad('../pages/Welcome', 'Welcome');
+const Login = lazyLoad('../pages/Login', 'Login');
+const Register = lazyLoad('../pages/Register', 'Register');
+const Account = lazyLoad('../pages/Account/Account', 'Account');
+const Error = lazyLoad('../pages/Error', 'Error');
+const NewTransaction = lazyLoad('../pages/NewTransaction', 'NewTransaction');
+const ServerDown = lazyLoad('../pages/ServerDown', 'ServerDown');
+const ProtectedRoute = lazyLoad('../components/ProtectedRoute', 'ProtectedRoute');
 
 export const App = () => {
    return (
