@@ -21,6 +21,7 @@ export const LoanMoney = ({ id, setRerender }) => {
    useEffect(() => {
       if (!ready) return;
       setRerender((prev) => !prev);
+      loanAmountRef.current.value = '';
    }, [ready, data]);
 
    return (

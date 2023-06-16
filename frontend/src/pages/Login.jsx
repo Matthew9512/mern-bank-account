@@ -38,8 +38,15 @@ export const Login = () => {
          {contextHolder}
          <form className='flex flex-col items-center justify-center gap-4 py-12 px-6 p-8 m-auto w-96 rounded-xl bg-white relative'>
             <p className='text-center font-bold pb-6 text-xl'>Log in</p>
-            <input ref={emailRef} className='invalid' type='email' placeholder='email' />
-            <input ref={passwordRef} minLength={3} type='password' placeholder='password' className='invalid' />
+            <input ref={emailRef} className='invalid' type='email' placeholder='email' defaultValue={'ewa@ewa.ewa'} />
+            <input
+               ref={passwordRef}
+               minLength={3}
+               type='password'
+               placeholder='password'
+               className='invalid'
+               defaultValue={'ewa'}
+            />
             <p>
                Dont have an account{' '}
                <Link className='link' to={'/register'}>
