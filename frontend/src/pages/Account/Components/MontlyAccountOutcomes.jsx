@@ -1,6 +1,7 @@
 import { Chart as ChartJS, ArcElement, Tooltip } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import { LoadingButton } from '../../../components/LoadingButton';
+
 ChartJS.register(ArcElement, Tooltip);
 
 export function MontlyAccountOutcomes({ data }) {

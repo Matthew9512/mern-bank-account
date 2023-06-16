@@ -8,6 +8,7 @@ const { updateTransactionToUser, searchUser, _resLimit } = require('../utils/use
 
 // get users date with first page of transactions
 const getUser = async (req, res, next) => {
+   let page = 1;
    try {
       const { id } = req.params;
 
@@ -18,7 +19,16 @@ const getUser = async (req, res, next) => {
 
       if (id !== userID) return res.status(403).json({ message: `You are not authorized to access this information` });
 
-      const findUser = await userModel.findById(id, { accountMovements: { $slice: [0, _resLimit] } });
+      // const findUser = await userModel.findById(id).limit(3).sort({ $natural: 1 });
+      const findUser = await userModel.findById(id).slice('accountMovements', -5);
+      // res.status(200).json(findUser);
+      // return;
+      // input: "accountMovements",
+      // sortBy: { "transactionDate": -1 }
+
+      // .findById(id).sort({ accountMovements: 1 });
+      // ==================
+      // const findUser = await userModel.findById(id, { accountMovements: { $slice: [0, _resLimit] } });
 
       if (!findUser) return res.status(404).json({ message: `User not found` });
 
@@ -35,6 +45,34 @@ const getUser = async (req, res, next) => {
       next(error);
    }
 };
+// const getUser = async (req, res, next) => {
+//    try {
+//       const { id } = req.params;
+
+//       if (!id) return res.status(404).json({ message: `No data provided` });
+
+//       // decoded users info
+//       const { userID } = req.user;
+
+//       if (id !== userID) return res.status(403).json({ message: `You are not authorized to access this information` });
+
+//       const findUser = await userModel.findById(id, { accountMovements: { $slice: [0, _resLimit] } });
+
+//       if (!findUser) return res.status(404).json({ message: `User not found` });
+
+//       const { userData, numberOfPages } = await searchUser(id);
+//       // monthly account movements based on current month
+//       const monthlyIncomesMovements = incomesSum(userData);
+//       const monthlyOutcomesMovements = outcomesSum(userData);
+
+//       const { password, updatedAt, __v, ...user } = findUser._doc;
+
+//       res.status(200).json({ user, monthlyIncomesMovements, monthlyOutcomesMovements, numberOfPages });
+//    } catch (error) {
+//       console.log(error);
+//       next(error);
+//    }
+// };
 
 // paginated users transactions
 const getUsersTransactions = async (req, res, next) => {
@@ -47,8 +85,8 @@ const getUsersTransactions = async (req, res, next) => {
 
       if (id !== userID) return res.status(403).json({ message: `You are not authorized to access this information` });
 
-      const transactions = await userModel.findById(id).slice('accountMovements', (page - 1) * _resLimit, _resLimit);
-
+      const transactions = await userModel.findById(id).slice('accountMovements', page * -_resLimit, _resLimit);
+      console.log(page * -_resLimit);
       const { accountMovements } = transactions._doc;
       res.status(200).json({ accountMovements });
    } catch (error) {
@@ -56,13 +94,33 @@ const getUsersTransactions = async (req, res, next) => {
       next(error);
    }
 };
+// const getUsersTransactions = async (req, res, next) => {
+//    try {
+//       const { id } = req.params;
+//       const { page } = req.query;
+
+//       // decoded users info
+//       const { userID } = req.user;
+
+//       if (id !== userID) return res.status(403).json({ message: `You are not authorized to access this information` });
+
+//       const transactions = await userModel.findById(id).slice('accountMovements', (page - 1) * _resLimit, _resLimit);
+
+//       const { accountMovements } = transactions._doc;
+//       res.status(200).json({ accountMovements });
+//    } catch (error) {
+//       console.log(error);
+//       next(error);
+//    }
+// };
 
 // make a new transaction
 const transferMoney = async (req, res, next) => {
    try {
       const { moneyAmount, transactionUser, id } = req.body;
 
-      if (!moneyAmount || !transactionUser || !id) return res.status(400).json({ message: `No enought information to complete transfer` });
+      if (!moneyAmount || !transactionUser || !id)
+         return res.status(400).json({ message: `No enought information to complete transfer` });
 
       // decoded users info
       const { userID } = req.user;
@@ -131,7 +189,11 @@ const loanMoney = async (req, res, next) => {
       const transactionTO = await userModel.findById(id);
 
       //    update user that gets money from transaction
-      updateTransactionToUser({ moneyAmount, transactionUser: transactionTO.accountNumber }, _bankAccNumber, findUser.username);
+      updateTransactionToUser(
+         { moneyAmount, transactionUser: transactionTO.accountNumber },
+         _bankAccNumber,
+         findUser.username
+      );
 
       const checkTransaction = transactionTO.totalMoney + +moneyAmount;
 

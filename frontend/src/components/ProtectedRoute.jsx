@@ -1,6 +1,6 @@
 import { Outlet, Navigate } from 'react-router-dom';
-import { getToken } from '../utils/axiosHelpers';
 import jwtDecode from 'jwt-decode';
+import { getToken } from '../utils/axiosHelpers';
 import { autoLogOut } from '../utils/autoLogOut';
 
 export const ProtectedRoute = () => {
@@ -12,9 +12,5 @@ export const ProtectedRoute = () => {
    const { exp, iat } = jwtDecode(token);
    autoLogOut(exp, iat);
 
-   return (
-      <>
-         <Outlet />
-      </>
-   );
+   return <Outlet />;
 };

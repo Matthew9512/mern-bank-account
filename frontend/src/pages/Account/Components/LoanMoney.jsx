@@ -24,12 +24,12 @@ export const LoanMoney = ({ id, setRerender }) => {
    }, [ready, data]);
 
    return (
-      <div className='flex flex-col lg:flex-row gap-4 w-40'>
+      <div className='flex flex-col lg:flex-row gap-2 w-40'>
          {contextHolder}
          <input
             onChange={validateMoneyInput}
             ref={loanAmountRef}
-            className='w-48 placeholder:text-sm'
+            className='w-40 placeholder:text-sm p-2'
             type='number'
             placeholder='amount of load ($)'
          />
