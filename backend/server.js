@@ -11,7 +11,7 @@ const app = express();
 const connDB = require('./config/connDB');
 const verifyJwt = require('./middleware/verifyJwt');
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 app.use(compression());
 app.use(cookieParser());
 app.use(helmet());
