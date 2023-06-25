@@ -1,10 +1,10 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
-import { useAuthAxios } from '../../../hooks/useAuthAxios';
+import { useAxios } from '../../../hooks/useAxios';
 import { arrowLeftIcon, arrowRightIcon } from '../../../utils/icons';
 
 export const Pagination = ({ setResData, setLoading, numberOfPages }) => {
-   const { fetchData, data, ready, contextHolder } = useAuthAxios();
+   const { fetchData, data, ready, contextHolder } = useAxios(true);
    const { id } = useParams();
    const [currentPage, setCurrentPage] = useState(1);
    let currentPageRef = useRef(1);
@@ -35,7 +35,9 @@ export const Pagination = ({ setResData, setLoading, numberOfPages }) => {
       <div onClick={nextPage} className='flex items-center gap-8 mx-auto mt-4'>
          {contextHolder}
          <button
-            className={`pagIcon ${currentPage === 1 ? 'disabled' : ''} rounded-full font-bold text-lg bg-light-white text-black`}
+            className={`pagIcon ${
+               currentPage === 1 ? 'disabled' : ''
+            } rounded-full font-bold text-lg bg-light-white text-black`}
             disabled={currentPage === 1}
             data-action={'prev'}
          >
@@ -43,7 +45,9 @@ export const Pagination = ({ setResData, setLoading, numberOfPages }) => {
          </button>
          <p className='font-bold'>{currentPage}</p>
          <button
-            className={`pagIcon ${currentPage === numberOfPages ? 'disabled' : ''} rounded-full font-bold bg-light-white text-black`}
+            className={`pagIcon ${
+               currentPage === numberOfPages ? 'disabled' : ''
+            } rounded-full font-bold bg-light-white text-black`}
             disabled={currentPage === numberOfPages}
             data-action={'next'}
          >

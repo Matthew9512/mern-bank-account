@@ -1,11 +1,11 @@
 import { useRef } from 'react';
-import { useAuthAxios } from '../hooks/useAuthAxios';
 import { useParams } from 'react-router-dom';
+import { useAxios } from '../hooks/useAxios';
 import { LoadingButton } from '../components/LoadingButton';
 import { validateMoneyInput } from '../utils/validateMoney';
 
 export const NewTransaction = () => {
-   const { fetchData, loading, contextHolder } = useAuthAxios();
+   const { fetchData, loading, contextHolder } = useAxios(true);
    const recipientRef = useRef();
    const amountRef = useRef();
    const { id } = useParams();
@@ -33,7 +33,15 @@ export const NewTransaction = () => {
             <label className='pt-4' htmlFor='account-number'>
                Reciver
             </label>
-            <input ref={recipientRef} minLength={1} className='invalid' type='text' id='account-number' placeholder='Type account number' />
+            <input
+               ref={recipientRef}
+               minLength={1}
+               className='invalid'
+               type='text'
+               id='account-number'
+               placeholder='Type account number'
+               defaultValue={`faf621f3311bde71`}
+            />
             <label className='pt-4' htmlFor='amount-money'>
                Sum
             </label>
@@ -50,7 +58,9 @@ export const NewTransaction = () => {
                Title
             </label>
             <input type='text' id='title' placeholder='Type title of transaction' />
-            <div className='mt-12 mx-auto'>{loading ? <LoadingButton /> : <button onClick={makeTransaction}>Send transaction</button>}</div>
+            <div className='mt-12 mx-auto'>
+               {loading ? <LoadingButton /> : <button onClick={makeTransaction}>Send transaction</button>}
+            </div>
          </form>
       </>
    );

@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { logOutIcon, userIcon, arrowDownIcon, removeAccount } from '../../../utils/icons';
-import { useAuthAxios } from '../../../hooks/useAuthAxios';
+import { useAxios } from '../../../hooks/useAxios';
 import { removeToken } from '../../../utils/axiosHelpers';
 import { LoadingButton } from '../../../components/LoadingButton';
 import { LoanMoney } from './LoanMoney';
 
 export const AccountNavbar = ({ data, id, setRerender }) => {
-   const { fetchData, contextHolder, loading, ready } = useAuthAxios();
+   const { fetchData, contextHolder, loading, ready } = useAxios(true);
    const navigate = useNavigate();
 
    const logOut = () => {

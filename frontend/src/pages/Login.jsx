@@ -8,7 +8,7 @@ export const Login = () => {
    const passwordRef = useRef();
    const emailRef = useRef();
    const navigate = useNavigate();
-   const { fetchData, data, loading, ready, contextHolder } = useAxios();
+   const { fetchData, data, loading, ready, contextHolder } = useAxios(false);
 
    const loginUser = (e) => {
       e.preventDefault();

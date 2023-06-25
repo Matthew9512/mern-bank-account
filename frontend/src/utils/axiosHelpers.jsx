@@ -1,10 +1,8 @@
 import { message } from 'antd';
-import axios from 'axios';
+import { axiosInstance } from '../hooks/useAxios';
 import jwtDecode from 'jwt-decode';
 
-export const authAxios = axios.create();
-
-authAxios.interceptors.request.use(
+axiosInstance.interceptors.request.use(
    async (config) => {
       const token = getToken();
       if (token) {

@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react';
-import { useAuthAxios } from '../../../hooks/useAuthAxios';
+import { useAxios } from '../../../hooks/useAxios';
 import { LoadingButton } from '../../../components/LoadingButton';
 import { validateMoneyInput } from '../../../utils/validateMoney';
 
 export const LoanMoney = ({ id, setRerender }) => {
    const loanAmountRef = useRef();
-   const { fetchData, data, ready, loading, contextHolder } = useAuthAxios();
+   const { fetchData, data, ready, loading, contextHolder } = useAxios(true);
 
    const requestLoan = () => {
       fetchData({

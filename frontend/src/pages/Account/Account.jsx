@@ -5,11 +5,11 @@ import { UsersDetails } from './Components/UsersDetails';
 import { MontlyAccountOutcomes } from './Components/MontlyAccountOutcomes';
 import { MontlyAccountIncomes } from './Components/MontlyAccountIncomes';
 import { AccountNavbar } from './Components/AccountNavbar';
-import { useAuthAxios } from '../../hooks/useAuthAxios';
+import { useAxios } from '../../hooks/useAxios';
 import { LoadingSpinner } from '../../components/LoadingSpinner';
 
 export const Account = () => {
-   const { fetchData, data, loading } = useAuthAxios();
+   const { fetchData, data, loading } = useAxios(true);
    const { id } = useParams();
    const [rerender, setRerender] = useState(false);
 

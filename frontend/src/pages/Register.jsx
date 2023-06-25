@@ -4,7 +4,7 @@ import { useAxios } from '../hooks/useAxios';
 import { LoadingButton } from '../components/LoadingButton';
 
 export const Register = () => {
-   const { fetchData, loading, ready, contextHolder } = useAxios();
+   const { fetchData, loading, ready, contextHolder } = useAxios(false);
    const usernameRef = useRef();
    const emailRef = useRef();
    const passwordRef = useRef();
@@ -14,7 +14,8 @@ export const Register = () => {
       e.preventDefault();
 
       if (!emailRef.current.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) return;
-      if (passwordRef.current?.value.length < 3 || usernameRef.current?.value.length < 3 || !emailRef.current.value) return;
+      if (passwordRef.current?.value.length < 3 || usernameRef.current?.value.length < 3 || !emailRef.current.value)
+         return;
 
       fetchData({
          url: `/auth/signin`,
