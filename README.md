@@ -1,7 +1,7 @@
 <div align="center">
 <h1>Bank account</h1>
 
-<a href='https://mern-travel-agency.vercel.app/'>https://mern-travel-agency.vercel.app/</a>
+<a href='https://mern-bank-account.netlify.app/'>https://mern-bank-account.netlify.app/</a>
 
 <h4>
 Website made using the MERN (MongoDB, Express.js, React.js, Node.js) stack. It allows users to search for their next vacation destination, book travels, rate and comment on travels, and interact with other users comments. The users interactions are secured by JWT (JSON Web Token) tokens.
