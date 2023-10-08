@@ -1,7 +1,7 @@
 <div align="center">
 <h1>Bank account</h1>
 
-<a href='https://mern-bank-account.netlify.app/'>https://mern-bank-account.netlify.app/</a>
+<a href='https://mern-banking.netlify.app/'>https://mern-banking.netlify.app/</a>
 
 <h4>
 Website made using the MERN (MongoDB, Express.js, React.js, Node.js) stack and TaildwindCSS. User can loan money from bank and keep track of their monthly incomes and outcomes thanks to charts made using react-chartjs-2 library. Reading users data and making transactions are posibile thanks to authorization and authentication implemented using JSON Web
@@ -45,16 +45,16 @@ Tokens.
     <pre><code>MONGO_DB = Mongo DB Atlas connection URI</code></pre>
     <pre><code>ACCESS_TOKEN = Random string of alphanumeric characters</code></pre>
     <li>Navigate to the project directory:</li>
-    <pre><code>cd mern-travel-page</code></pre>
+    <pre><code>cd mern-banking</code></pre>
     <li>Install the dependencies:</li>
     <pre><code>npm install</code></pre>
     <li>Start the development server:</li>
     <pre><code>npm run dev</code></pre>
-    <li>Open your web browser and visit <code>http://localhost:3000</code> to access the MERN Travel Page.</li>
+    <li>Open your web browser and visit <code>http://localhost:3000</code> to access the MERN-banking.</li>
   </ol>
   
   <h2>Contributing</h2>
-  <p>Contributions are welcome! If you would like to contribute to the mern-bank-account project, please follow these steps:</p>
+  <p>Contributions are welcome! If you would like to contribute to the mern-banking project, please follow these steps:</p>
   <ol>
     <li>Fork the repository on GitHub.</li>
     <li>Create a new branch.</li>
